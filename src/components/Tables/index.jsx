@@ -1,9 +1,8 @@
 import React, { Fragment, useCallback, useEffect, useState } from "react";
 import { Button, Table } from "react-bootstrap";
 import { StudentsService } from "../../services";
-import { EditModal } from "../Forms/edit-modal";
 import { Loading } from "../Loading";
-import { ExcludeModal } from "../modals/exclude-student";
+import { EditModal, ExcludeModal } from "../modals";
 
 export function MainTable() {
   const [students, setStudents] = useState([]);

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 import { MainForm } from "../Forms";
-import { EditModal } from "../Forms/edit-modal";
+import { EditModal } from "../modals";
 
 export function Buttons() {
   const [showForm, setShowForm] = useState(false);
@@ -15,6 +15,10 @@ export function Buttons() {
     return setShowForm((prevState) => (prevState = false));
   };
 
+  const handleShowEditModal = () => {
+    return setShowEditStudentForm((prevState) => (prevState = false));
+  };
+
   return (
     <div>
       <Button variant="primary" onClick={handleAddClick}>
@@ -22,10 +26,8 @@ export function Buttons() {
       </Button>
 
       <MainForm show={showForm} close={handleClose} />
-      <EditModal
-        show={showEditStudentForm}
-        close={() => setShowEditStudentForm(false)}
-      />
+
+      <EditModal show={showEditStudentForm} close={handleShowEditModal} />
     </div>
   );
 }
