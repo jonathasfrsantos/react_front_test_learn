@@ -1,24 +1,22 @@
-
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Table } from "react-bootstrap";
-import { ApiCRUD } from "../../services/API/ApiCRUD";
 
-function MainTable() {
+export function MainTable() {
   const [alunos, setAlunos] = useState([]);
 
-useEffect(() => {
-    axios.get("http://localhost:8080/alunos")
-        .then(response => {
-            setAlunos(response.data);
-        })
-        .catch(error => {
-            console.log(error);
-        });
-}, []);
+  useEffect(() => {
+    axios
+      .get("http://localhost:8080/alunos")
+      .then((response) => {
+        setAlunos(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
-
-console.log(alunos);
+  console.log(alunos);
 
   return (
     <>
@@ -48,5 +46,3 @@ console.log(alunos);
     </>
   );
 }
-
-export default MainTable;

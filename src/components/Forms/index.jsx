@@ -1,10 +1,10 @@
-import { useState } from 'react';
-import { Modal, Form, Button } from 'react-bootstrap';
+import { useState } from "react";
+import { Button, Form, Modal } from "react-bootstrap";
 
-function MainForm({ show, close, handleSave }) {
-  const [showForm, setShowForm] = useState(false);  
-  const [nome, setNome] = useState('');
-  const [email, setEmail] = useState('');
+export function MainForm({ show, close, handleSave }) {
+  const [showForm, setShowForm] = useState(false);
+  const [nome, setNome] = useState("");
+  const [email, setEmail] = useState("");
 
   const handleNomeChange = (event) => {
     setNome(event.target.value);
@@ -16,13 +16,13 @@ function MainForm({ show, close, handleSave }) {
 
   const handleClose = () => {
     setShowForm(false);
-  }
+  };
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
     handleSave({ nome, email });
-    setNome('');
-    setEmail('');
+    setNome("");
+    setEmail("");
     handleClose();
   };
 
@@ -35,12 +35,22 @@ function MainForm({ show, close, handleSave }) {
         <Form onSubmit={handleFormSubmit}>
           <Form.Group controlId="formBasicNome">
             <Form.Label>Nome</Form.Label>
-            <Form.Control type="text" placeholder="Digite o nome" value={nome} onChange={handleNomeChange} />
+            <Form.Control
+              type="text"
+              placeholder="Digite o nome"
+              value={nome}
+              onChange={handleNomeChange}
+            />
           </Form.Group>
 
           <Form.Group controlId="formBasicEmail">
             <Form.Label>Email</Form.Label>
-            <Form.Control type="email" placeholder="Digite o email" value={email} onChange={handleEmailChange} />
+            <Form.Control
+              type="email"
+              placeholder="Digite o email"
+              value={email}
+              onChange={handleEmailChange}
+            />
           </Form.Group>
 
           <Button variant="primary" type="submit">
@@ -51,5 +61,3 @@ function MainForm({ show, close, handleSave }) {
     </Modal>
   );
 }
-
-export default MainForm;
