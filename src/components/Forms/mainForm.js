@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { Modal, Form, Button } from 'react-bootstrap';
 
-function MainForm({ show, handleClose, handleSave }) {
+function MainForm({ show, close, handleSave }) {
+  const [showForm, setShowForm] = useState(false);  
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
 
@@ -13,6 +14,10 @@ function MainForm({ show, handleClose, handleSave }) {
     setEmail(event.target.value);
   };
 
+  const handleClose = () => {
+    setShowForm(false);
+  }
+
   const handleFormSubmit = (event) => {
     event.preventDefault();
     handleSave({ nome, email });
@@ -22,7 +27,7 @@ function MainForm({ show, handleClose, handleSave }) {
   };
 
   return (
-    <Modal show={show} onHide={handleClose}>
+    <Modal show={show} onHide={close}>
       <Modal.Header closeButton>
         <Modal.Title>Adicionar Aluno</Modal.Title>
       </Modal.Header>

@@ -9,7 +9,7 @@ function App() {
     <div>
         <Buttons />
         <MainTable />
-        <MainForm />
+
     </div>
     
   )
