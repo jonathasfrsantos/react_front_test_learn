@@ -1,63 +1,79 @@
-import { useState } from "react";
-import { Button, Form, Modal } from "react-bootstrap";
+import { Fragment, useState } from "react";
+import { Button, Form, Modal, ToastContainer } from "react-bootstrap";
+import { StudentsService } from "../../services";
 
-export function MainForm({ show, close, handleSave }) {
-  const [showForm, setShowForm] = useState(false);
-  const [nome, setNome] = useState("");
+import { Loading } from "../Loading";
+
+export function MainForm({ show, close }) {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleNomeChange = (event) => {
-    setNome(event.target.value);
+    return setName((prevState) => (prevState = event.target.value));
   };
 
   const handleEmailChange = (event) => {
-    setEmail(event.target.value);
+    return setEmail((prevState) => (prevState = event.target.value));
   };
 
-  const handleClose = () => {
-    setShowForm(false);
-  };
+  const handleFormSubmit = async () => {
+    setLoading((prevState) => (prevState = true));
 
-  const handleFormSubmit = (event) => {
-    event.preventDefault();
-    handleSave({ nome, email });
-    setNome("");
-    setEmail("");
-    handleClose();
+    const studentService = new StudentsService();
+
+    if (name === "" || email === "") {
+      return;
+    }
+
+    return studentService
+      .create({ name: name, email: email })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
-    <Modal show={show} onHide={close}>
-      <Modal.Header closeButton>
-        <Modal.Title>Adicionar Aluno</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <Form onSubmit={handleFormSubmit}>
-          <Form.Group controlId="formBasicNome">
-            <Form.Label>Nome</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Digite o nome"
-              value={nome}
-              onChange={handleNomeChange}
-            />
-          </Form.Group>
+    <Fragment>
+      <ToastContainer />
 
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label>Email</Form.Label>
-            <Form.Control
-              type="email"
-              placeholder="Digite o email"
-              value={email}
-              onChange={handleEmailChange}
-            />
-          </Form.Group>
+      <Loading loading={loading} />
 
-          <Button variant="primary" type="submit">
-            Salvar
-          </Button>
-        </Form>
-      </Modal.Body>
-    </Modal>
+      <Modal show={show} onHide={close}>
+        <Modal.Header closeButton>
+          <Modal.Title>Adicionar Aluno</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form onSubmit={handleFormSubmit}>
+            <Form.Group controlId="formBasicNome">
+              <Form.Label>Nome</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Digite o nome"
+                value={name}
+                onChange={handleNomeChange}
+              />
+            </Form.Group>
+
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                type="email"
+                placeholder="Digite o email"
+                value={email}
+                onChange={handleEmailChange}
+              />
+            </Form.Group>
+
+            <Button variant="primary" type="submit">
+              Salvar
+            </Button>
+          </Form>
+        </Modal.Body>
+      </Modal>
+    </Fragment>
   );
 }

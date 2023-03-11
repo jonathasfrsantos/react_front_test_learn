@@ -9,6 +9,7 @@ export function Loading({ loading }) {
             display: "flex",
             justifyContent: "center",
             backgroundColor: "gray",
+            height: "100vh",
           }}
         >
           <h1>Carregando...</h1>
